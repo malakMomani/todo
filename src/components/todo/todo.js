@@ -38,6 +38,16 @@ function ToDo() {
     }
   };
 
+  const updateItem = (id, itemObj) => {
+    let item = list.filter(i => i._id === id)[0] || {};
+
+    if (item._id) {
+      item.text = itemObj.newTask;
+      let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
+      setList(newList);
+    }
+  };
+
   // this will happen after the initial render ONLY
   useEffect(() => {
     let list = [
@@ -70,7 +80,7 @@ function ToDo() {
             list={list}
             handleComplete={toggleComplete}
             deleteItem={deleteItem}
-            // updateItem={updateItem}
+            updateItem={updateItem}
           />
         </div>
       </section>

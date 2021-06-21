@@ -12,6 +12,7 @@ function TodoForm(props) {
   };
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
     e.target.reset();
     props.addItem(item);

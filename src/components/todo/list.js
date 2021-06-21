@@ -1,21 +1,42 @@
-import React from 'react';
-import { ListGroup, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { ListGroup, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function TodoList(props) {
-  /* <ListGroup>
-  <ListGroup.Item>No style</ListGroup.Item>
-  <ListGroup.Item variant="primary">Primary</ListGroup.Item>
-  <ListGroup.Item variant="secondary">Secondary</ListGroup.Item>
-  <ListGroup.Item variant="success">Success</ListGroup.Item>
-  <ListGroup.Item variant="danger">Danger</ListGroup.Item>
-  <ListGroup.Item variant="warning">Warning</ListGroup.Item>
-  <ListGroup.Item variant="info">Info</ListGroup.Item>
-  <ListGroup.Item variant="light">Light</ListGroup.Item>
-  <ListGroup.Item variant="dark">Dark</ListGroup.Item>
-</ListGroup> */
 
+  let [show, setShow] = useState(false);
+  let [id, setId] = useState();
+  let [newTask, setNewTask] = useState();
+  let [difficulty, setDif] = useState();
+  let [assignee , setAssignee] = useState();
+
+  function handleShow(id) {
+    console.log('-----1',show)
+    setShow(!show);
+    setId(id);
+  }
+
+  function handleUpdate(e){
+    e.preventDefault();
+    props.updateItem(id, {
+      newTask, 
+      difficulty,
+      assignee
+    })
+  }
+
+  function handleTaskChange(e) {
+    setNewTask(e.target.value);
+  }
+
+  function handleDifChange(e) {
+    setDif(e.target.value);
+  }
+
+  function handleAssChange(e) {
+    setAssignee(e.target.value);
+  }
   return (
     <>
       <ListGroup className="list">
@@ -32,13 +53,18 @@ function TodoList(props) {
             <span onClick={() => props.handleComplete(item._id)}>
               {item.text}
             </span>
-            {/* <Button variant="outline-success" onClick={() => props.updateItem(item._id)}>Update</Button> */}
+            <Button variant="outline-success" onClick={() => handleShow(item._id)}>Update</Button>
 
+            <Form id="updateForm" style={{display: show ? 'block' : 'none' }} onSubmit={handleUpdate}>
+              <Form.Control placeholder="update task" onChange={handleTaskChange}/>
+              <Form.Control placeholder="update dificulty" onChange={handleDifChange} />
+              <Form.Control placeholder="update Assignee"onChange={handleAssChange} />
+              <Button type ="submit">update</Button>
+            </Form>
           </ListGroup.Item>
         ))}
       </ListGroup>
     </>
   );
 }
-
 export default TodoList;
