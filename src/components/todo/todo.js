@@ -43,6 +43,8 @@ function ToDo() {
 
     if (item._id) {
       item.text = itemObj.newTask;
+      item.difficulty = itemObj.difficulty;
+      item.assignee = itemObj.assignee;
       let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
       setList(newList);
     }
