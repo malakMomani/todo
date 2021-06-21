@@ -11,7 +11,6 @@ function TodoList(props) {
   let [newTask, setNewTask] = useState('');
   let [difficulty, setDif] = useState();
   let [assignee, setAssignee] = useState();
-  let [handleSubmit] = useForm(handleUpdate);
 
   function handleShow(id) {
     console.log('-----1', show)
