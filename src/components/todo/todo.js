@@ -61,6 +61,11 @@ function ToDo() {
     setList(list);
   }, []);
 
+
+  useEffect(() => {
+    document.title = `TO DO ${list.filter(item => !item.complete).length} / ${list.length}`;
+  }, [list]);
+
   return (
     <div className="todoDiv">
       <header>
