@@ -6,6 +6,13 @@ import { Navbar } from 'react-bootstrap';
 
 import './todo.scss';
 
+/**
+    useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `You clicked ${count} times`;
+  });
+ */
+
 function ToDo() {
 
   const [list, setList] = useState([]);
@@ -60,6 +67,11 @@ function ToDo() {
 
     setList(list);
   }, []);
+
+
+  useEffect(() => {
+    document.title = `TO DO ${list.filter(item => !item.complete).length} / ${list.length}`;
+  }, [list]);
 
   return (
     <div className="todoDiv">
