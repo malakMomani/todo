@@ -1,16 +1,21 @@
-import { useEffect, useState } from 'react';
+import React , { useEffect, useState } from 'react';
+import TodoList from './list.js'
+import TodoForm from './form.js';
+import { Navbar } from 'react-bootstrap';
+import './todo.scss';
 
 const todoAPI = 'https://api-server-malak.herokuapp.com/task';
 
 
-const useApi = () => {
+const ToDo = () => {
 
   const [list, setList] = useState([]);
   const _addItem = (item) => {
+    
     item.due = new Date();
     fetch(todoAPI, {
       method: 'post',
-      mode: 'cors',
+      // mode: 'cors',
       cache: 'no-cache',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(item)
@@ -48,6 +53,11 @@ const useApi = () => {
   };
 
   const _getTodoItems = () => {
+    // axios.get(todoAPI)
+    // .then(response => response.json)
+    // .then(data => console.log(data))
+    // .catch(err => console.log(err))
+
     fetch(todoAPI, {
       method: 'get',
       mode: 'cors',
@@ -98,35 +108,37 @@ const useApi = () => {
     }
   };
 
+  useEffect(() => {
+    document.title = `TO DO ${list.filter(item => !item.complete).length} / ${list.length}`;
+  }, [list]);
 
   useEffect(_getTodoItems, []);
 
-  return [_addItem, _toggleComplete, list, setList, _deleteItem ,_updateItem , _getTodoItems];
-  // return (
-  //   <>
-  //     <header>
-  //       <h2>
-  //         There are {list.filter(item => !item.complete).length} Items To Complete
-  //       </h2>
-  //     </header>
+  return (
+    <div className="todoDiv">
+      <header>
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand >To Do List Manager ({list.filter(item => !item.complete).length})</Navbar.Brand>
+        </Navbar>
+      </header>
 
-  //     <section className="todo">
+      <section className="todo">
 
-  //       <div>
-  //         <TodoForm handleSubmit={_addItem} />
-  //       </div>
+        <div>
+          <TodoForm addItem={_addItem} />
+        </div>
 
-  //       <div>
-  //         <TodoList
-  //           list={list}
-  //           handleComplete={_toggleComplete}
-  //           deleteItem={_deleteItem}
-  //           updateItem={_updateItem}
-  //         />
-  //       </div>
-  //     </section>
-  //   </>
-  // );
+        <div>
+          <TodoList
+            list={list}
+            handleComplete={_toggleComplete}
+            deleteItem={_deleteItem}
+            updateItem={_updateItem}
+          />
+        </div>
+      </section>
+    </div>
+  );
 };
 
-export default useApi;
+export default ToDo;
