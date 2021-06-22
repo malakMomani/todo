@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TodoList from './list.js'
 import TodoForm from './form.js';
 import { Navbar } from 'react-bootstrap';
@@ -11,7 +11,7 @@ const ToDo = () => {
 
   const [list, setList] = useState([]);
   const _addItem = (item) => {
-    
+
     item.due = new Date();
     fetch(todoAPI, {
       method: 'post',
@@ -52,21 +52,29 @@ const ToDo = () => {
     }
   };
 
-  const _getTodoItems = () => {
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      await _getTodoItems();
+      // ...
+    }
+    fetchData();
+  }, []); // Or [] if effect doesn't need props or state
+
+
+  const _getTodoItems = async () => {
     // axios.get(todoAPI)
     // .then(response => response.json)
     // .then(data => console.log(data))
     // .catch(err => console.log(err))
 
-    fetch(todoAPI, {
+    await fetch(todoAPI, {
       method: 'get',
       mode: 'cors',
     })
       .then(data => {
         data.json();
-      }).then(data =>{
-        console.log('data' , data);
-      })
+      }).then(data => setList(data))
       .catch(console.error);
   };
 
@@ -112,7 +120,7 @@ const ToDo = () => {
     document.title = `TO DO ${list.filter(item => !item.complete).length} / ${list.length}`;
   }, [list]);
 
-  useEffect(_getTodoItems, []);
+  // useEffect(_getTodoItems, []);
 
   return (
     <div className="todoDiv">
