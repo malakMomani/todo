@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 export const PaginationContext = React.createContext();
 
 // make it a function component
-function PaginationContext({ children }) {
+function PaginationProvider({ children }) {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [itemsPerPage, setItemsPerPage] = useState(2);
 
   const state = {
     currentPage,
@@ -22,4 +22,4 @@ function PaginationContext({ children }) {
   )
 }
 
-export default PaginationContext;
+export default PaginationProvider;

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React,{useState} from 'react';
 
 export const SettingsContext = React.createContext();
 
@@ -22,7 +22,4 @@ function SettingsProvider({children}) {
     )
 }
 
-export function useSetting() {
-  return useContext(SettingsContext);
-}
 export default SettingsProvider;
