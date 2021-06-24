@@ -4,11 +4,12 @@ import ToDo from './components/todo/todo';
 import Header from './components/header/header';
 import SettingsProvider from './context/settingContext';
 import PaginationProvider from './context/paginationContext';
+import AuthProvider from './context/authContext';
 
 export default function App() {
   return (
     <>
-
+      {/* 
             <Login/>
             <Auth action="delete">
                 <button>Fake Delete</button>
@@ -21,16 +22,15 @@ export default function App() {
             </Auth>
             <Auth action="read">
                 <div>Fake List ..</div>
-            </Auth>
-<AuthProvider>
-
-      <SettingsProvider>
-        <PaginationProvider>
-          <Header />
-          <ToDo />
-        </PaginationProvider>
-      </SettingsProvider>
-</AuthProvider>
+            </Auth> */}
+      <AuthProvider>
+        <SettingsProvider>
+          <PaginationProvider>
+            <Header />
+            <ToDo />
+          </PaginationProvider>
+        </SettingsProvider>
+      </AuthProvider>
 
     </>
   );
