@@ -5,7 +5,6 @@ function quickSort(arr, left, right) {
     quickSort(arr, position + 1, right);
   }
 
-  console.log('arr,', arr);
   return arr;
 
 }

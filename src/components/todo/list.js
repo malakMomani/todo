@@ -99,7 +99,7 @@ function TodoList(props) {
                 <small id="difficulty">Difficulty: {item.difficulty}</small>
                 <Button variant="outline-success" onClick={() => handleShow(item._id)}>Update</Button>
 
-                <Form id="updateForm" style={{ display: show ? 'block' : 'none' }} onSubmit={handleUpdate}>
+                <Form className="updateForm" style={{ display: show ? 'block' : 'none' }} onSubmit={handleUpdate}>
                   <Form.Control placeholder="update task" onChange={handleTaskChange} />
                   <Form.Control placeholder="update dificulty" onChange={handleDifChange} />
                   <Form.Control placeholder="update Assignee" onChange={handleAssChange} />

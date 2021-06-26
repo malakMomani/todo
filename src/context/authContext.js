@@ -78,7 +78,7 @@ class AuthProvider extends React.Component {
             role: role
         }
         console.log('fetch with ', API_SERVER + '/signup')
-        const result = await fetch(`${API_SERVER}/signup`, {
+        const result = await fetch(`${API_SERVER}/signUP`, {
             method: 'post',
             body: JSON.stringify(body)
         });
@@ -86,10 +86,17 @@ class AuthProvider extends React.Component {
         console.log('problem ---------------');
         let data = await result.json();
         console.log(data);
-        this.validateToken(data.token);
         // verify ==> with the secret
         // decode ==> does not need the secret
-        console.log(username, 'user sign up');
+        const user = jwt.decode(data.token); // not very recommended
+        if (user) {
+            this.setState({ signedUp: true, user });
+            cookie.save('auth-token', data.token);
+
+        }
+
+        // add the token to the browser cookies
+        console.log(data.token, 'user sign up');
     }
 
     render() {
