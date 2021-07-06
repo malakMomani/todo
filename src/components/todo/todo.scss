@@ -55,7 +55,7 @@ html {
       flex-direction: row;
       font-size: 1em;
       margin: 0.75em 0.5em;
-    
+
       &.complete-false {
         background: rgb(96, 219, 150);
         &:hover {
@@ -64,13 +64,12 @@ html {
       }
 
       &.complete-true {
-          background: pink;
-          text-decoration:line-through;
-          &:hover {
-             background: seagreen;
-          }
+        background: pink;
+        text-decoration: line-through;
+        &:hover {
+          background: seagreen;
+        }
       }
-
     }
     #deleteButton {
       border: none;
@@ -85,11 +84,11 @@ html {
       height: 40px;
       padding-top: 7px;
     }
-    #top{
+    #top {
       display: inline;
       float: left;
     }
-    #assignee{
+    #assignee {
       width: 150px;
     }
   }
