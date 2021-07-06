@@ -1,9 +1,33 @@
+
 import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ListGroup, Button, Form, Badge, Card, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { SettingsContext } from '../../context/settingContext.js';
+import { PaginationContext } from '../../context/paginationContext';
+import Pagination from './pagination.js';
+import quickSort from '../../helper/quick-sort.js';
 
 function TodoList(props) {
+
+  let settingContext = useContext(SettingsContext);
+  let pagenationContext = useContext(PaginationContext);
+
+  // console.log('context', context);
+
+  console.log(props.list);
+
+  let items = quickSort(props.list, 0 , props.list.length-1);
+
+  console.log(items);
+  if(settingContext.hideCompletedItems){
+    items = items.filter(item => !item.complete)
+  }
+
+  const indexOfLastItem = pagenationContext.currentPage * pagenationContext.itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - pagenationContext.itemsPerPage;
+  items = items.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = pageNumber => pagenationContext.setCurrentPage(pageNumber);
 
   let [show, setShow] = useState(false);
   let [id, setId] = useState('');
@@ -40,14 +64,16 @@ function TodoList(props) {
   return (
     <>
       <ListGroup className="list">
+        <Button variant="outline-primary" onClick={() => settingContext.setHideCompletedItems(!settingContext.hideCompletedItems)}>
+          Hide Completed Items
+        </Button>
         <Modal.Dialog>
-          {props.list.map(item => (
-            <Card>
+          {items.map((item, index) => (
+            <Card key={`${item}${index}`} >
 
 
               <Modal.Header>
                 <Modal.Title>
-
                   <Button variant="danger" onClick={() => props.deleteItem(item._id)} id="deleteButton" >X</Button>
 
                   <div id="top">
@@ -75,7 +101,7 @@ function TodoList(props) {
                 <small id="difficulty">Difficulty: {item.difficulty}</small>
                 <Button variant="outline-success" onClick={() => handleShow(item._id)}>Update</Button>
 
-                <Form id="updateForm" style={{ display: show ? 'block' : 'none' }} onSubmit={handleUpdate}>
+                <Form className="updateForm" style={{ display: show ? 'block' : 'none' }} onSubmit={handleUpdate}>
                   <Form.Control placeholder="update task" onChange={handleTaskChange} />
                   <Form.Control placeholder="update dificulty" onChange={handleDifChange} />
                   <Form.Control placeholder="update Assignee" onChange={handleAssChange} />
@@ -86,6 +112,12 @@ function TodoList(props) {
           ))}
         </Modal.Dialog>
       </ListGroup>
+
+      <Pagination
+            itemsPerPage={pagenationContext.itemsPerPage}
+            totalItems={props.list.length}
+            paginate={paginate}>
+      </Pagination>
     </>
   );
 }

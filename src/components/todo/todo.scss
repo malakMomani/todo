@@ -63,14 +63,21 @@ html {
         }
       }
 
-      &.complete-true {
+
+      &.complete-false {
+        background: rgb(96, 219, 150);
+        &:hover {
           background: pink;
-          text-decoration:line-through;
-          &:hover {
-             background: seagreen;
-          }
+        }
       }
 
+      &.complete-true {
+        background: pink;
+        text-decoration: line-through;
+        &:hover {
+          background: seagreen;
+        }
+      }
     }
     #deleteButton {
       border: none;
@@ -84,12 +91,13 @@ html {
       width: 130px;
       height: 40px;
       padding-top: 7px;
+
     }
-    #top{
+    #top {
       display: inline;
       float: left;
     }
-    #assignee{
+    #assignee {
       width: 150px;
     }
   }
