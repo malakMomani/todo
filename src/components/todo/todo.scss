@@ -55,6 +55,14 @@ html {
       flex-direction: row;
       font-size: 1em;
       margin: 0.75em 0.5em;
+    
+      &.complete-false {
+        background: rgb(96, 219, 150);
+        &:hover {
+          background: pink;
+        }
+      }
+
 
       &.complete-false {
         background: rgb(96, 219, 150);
@@ -83,6 +91,7 @@ html {
       width: 130px;
       height: 40px;
       padding-top: 7px;
+
     }
     #top {
       display: inline;
